@@ -81,15 +81,17 @@ int checkEntry(char * label);
 Entry * getEntry();
 Entry * getHeadEntry();
 
-/* function implemented in operations.c functions */
+/* function implemented in operandAnalysis.c functions */
 void analyzeOperation(char * token, int line, int *IC, char *label);
 int isRegister(char * token);
 int isIndex(char * token);
 int isOperation(char * token);
+int secondMethodFormValidation(char * candidate);
 
 /* function implemented in wordsList.c functions */
 void addWordLine(WordLine * node);
 void freeWords();
+void freeWord();
 WordLine * getMissingLabel();
 WordLine * getHeadWord();
 int countWords();

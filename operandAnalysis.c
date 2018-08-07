@@ -4,17 +4,8 @@ freeWord(first);\
 freeWord(second);\
 freeWord(third);\
 return;
-//
-//  operandsAnalysis.c
-//  maman14
-//
-//  Created by roeyki on 29.7.2018.
-//  Copyright © 2018 roeyki. All rights reserved.
-//
 #include "header.h"
-/*This file contains functions which handle input analyzing for operations.*/
 
-/*Array holding information about each opcode, for internal use*/
 static Opcode opCodes[NUM_OF_OPCODES] = {
         {"mov", 0, 1705},
         {"cmp", 1, 1769},
@@ -73,8 +64,6 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
     char *secondParamete;
     char *temp;
     int firstOpen;
-    int firstParameterMethod = -1;
-    int secondParameterMethod = -1;
     char command[MAX_LINE]  = "\0";
     char *parameterHolder   = 0;
     strcpy(command,currWord);
@@ -258,42 +247,33 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
         second->line = line;
         third->line  = line;
         first->word |= opCodes[commandFound]->code PUSH_OPCODE;
-        switch (secondAddressingMethod) {
-            case -1:
-                freeWord(second);
-                break;
-            case 0:
-                second->Word |= secondWord PUSH_IMMEDIATE;
-                break;
-            case 1:
-                freeWord(second);
-                break;
-            case 2:
-                freeWord(second);
-                break;
-            case 3:
-                second->Word |= secondWord PUSH_SRC_;
-                break;
 
-            default:
-                break;
-        }
-        switch (thirdAddressingMethod) {
-            case -1:
-                freeWord(third);
-                break;
-            case 0:
-                third->Word |= thirdWord PUSH_IMMEDIATE;
-                break;
-            case 1:
-                freeWord(second);
-                break;
-            case 3:
-                freeWord(second);
-                break;
+        if(secondAddressingMethod != -1 ){
+            /* If we have only one operand */
+            if(thirdAddressingMethod == -1 ){
+                if(secondAddressingMethod == 2){
+                    if(firstParameterAddressingMethod == 3 && secondParameteAddressingMethod == 3){
+                        /* TODO : create word menualy*/
 
-            default:
-                break;
+                    } else {
+                        addAdditional(firstParameter,firstParameterAddressingMethod,0,IC);
+                        addAdditional(secondParamete,secondParameteAddressingMethod,1,IC);
+                    }
+                }else{
+                    addAdditional(secondWord,secondAddressingMethod,0,IC);
+                }
+                /* If we have two operands */
+            } else {
+                if(secondAddressingMethod == 3 && thirdAddressingMethod == 3){
+                    /* TODO : create word menualy*/
+
+                    /* Send two operands to creation*/
+                } else {
+                    addAdditional(secondWord,secondAddressingMethod,0,IC);
+                    addAdditional(thirdWord,secondAddressingMethod,1,IC);
+                }
+            }
+
         }
 
     } else {
