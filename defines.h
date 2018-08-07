@@ -7,6 +7,7 @@
 /* boolean enum */
 enum boolean {FALSE, TRUE};
 
+
 /* Magic number */
 
 #define DECIMAL_BASE       10
@@ -18,14 +19,19 @@ enum boolean {FALSE, TRUE};
 #define OPCODES_AMOUNT     16
 #define MAX_CODE_LINES     256
 #define MAX_COMMAND_LENGTH 10
+#define PUSH_SOURCE_OPERAN <<4
+#define PUSH_TARGET_OPERAN <<2
+#define PUSH_FIRST_PARAMER <<12
+#define PUSH_SECOND_PARAME <<10
+#define PUSH_OPCODE        <<6
+#define PUSH_IMMEDIATE     <<2
+#define PUSH_SRC_REG       <<8
+#define PUSH_TARG_REG      <<2
 #define MAX_LINE 80
 
 /* Error massages */
 #define FILE_ERROR "printf('File opening error, please check it and try again');"
 #define FILE_NOT_FOUND "printf('File not found, please check it and try again');"
-
-typedef enum {NONE, FIRST, SECOND, BOTH} supportedOperands;
-
 
 /* Directive enum - used during the first pass to determine which directive has been recieved.
 NONE means no directive has been recieved and ERROR means that the string was recognized as a directive but the syntax was wrong*/

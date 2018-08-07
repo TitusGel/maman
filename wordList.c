@@ -73,6 +73,22 @@ void freeWords()
     }
     head = NULL;
 }
+void freeWord(WordLine * ptr)
+{
+
+    if (!ptr)
+        return;
+
+    while (ptr)
+    {
+        WordLine * tmp = ptr;
+        ptr = ptr->next;
+
+        free(tmp->missingLabel);
+        free(tmp);
+    }
+    head = NULL;
+}
 
 /*This function will search for a word with a missing label and return it.
 if no such word was found, it will return NULL*/
