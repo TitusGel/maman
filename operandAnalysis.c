@@ -257,7 +257,7 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
         first->line  = line;
         second->line = line;
         third->line  = line;
-        first->Word |= opCodes[commandFound]->code PUSH_OPCODE;
+        first->word |= opCodes[commandFound]->code PUSH_OPCODE;
         switch (secondAddressingMethod) {
             case -1:
                 freeWord(second);
