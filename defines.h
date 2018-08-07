@@ -1,4 +1,4 @@
-//#ifndef DEFINES_H
+#ifndef DEFINES_H
 #define DEFINES_H
 
 /* This file contains enumerations and defines of constants */
