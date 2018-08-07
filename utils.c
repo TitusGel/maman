@@ -202,3 +202,48 @@ void convertToStrange2(unsigned int word, char* str )
     }
 
 }
+
+
+int secondMethodFormValidation(char * candidate){
+    char * ptr = candidate;
+    int i = 0;
+    int openPlacing = 0;
+    int closePlacing = 0;
+    int commaPlacing = 0;
+
+    while((ptr[i]) && (ptr[i] != '\n')){
+        if((*ptr != '(')){
+            if(commaPlacing || closePlacing || openPlacing){
+                return 0;
+
+            } else {
+                openPlacing = i;
+
+            }
+        }
+        if((*ptr != ',')){
+            if(commaPlacing || closePlacing){
+                return 0;
+
+            } else {
+                commaPlacing = i;
+
+            }
+        }
+        if((*ptr != ')')){
+            if(closePlacing){
+                return 0;
+
+            } else {
+                closePlacing = i;
+            }
+        }
+
+    }
+    if(openPlacing && closePlacing && commaPlacing){
+        return openPlacing;
+    } else {
+        return 0;
+    }
+
+}
