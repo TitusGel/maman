@@ -117,7 +117,8 @@ void firstPass(FILE * f, int * IC, int * DC)
                 /* add an entry node*/
                               addEntry(currWord, lineCounter);
                 /*if there's another word*/
-                if ((currWord = strtok(NULL, "\n")))
+                (currWord = strtok(NULL, " \t\n"));
+                if (currWord)
                 {
                     /*add error and go to next line */
                      addError("Entry directive can only take one parameter", lineCounter, NULL );
@@ -145,7 +146,8 @@ void firstPass(FILE * f, int * IC, int * DC)
                 /*add extern symbol*/
                 addSymbol(currWord, 0, TRUE, FALSE, lineCounter);
                 /*if next token is not null*/
-                if ((currWord = strtok(NULL, "\n")))
+                (currWord = strtok(NULL, "\n"));
+                if (currWord)
                 {
                     /*add error and go to next line*/
                                               addError("Extern directive can only take one parameter", lineCounter, NULL );

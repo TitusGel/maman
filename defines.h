@@ -89,12 +89,6 @@ static char * registers[NUM_OF_REGISTERS] = {"r1", "r2", "r3", "r4", "r5", "r6",
  * Functional MACROS OR better yet: Multi - lined MACROS ?
  */
 
-#define DIE(MESSAGE)\
-addError(#MESSAGE, line, NULL);\
-free(first);\
-free(second);\
-free(third);\
-return;
 
 #define OPCODE_POSITION 6
 
@@ -105,8 +99,6 @@ return;
 #define SOURCE_OPERAND(SOURCE_TO_GEN) SOURCE_TO_GEN<<4
 
 #define TARGET_OPERAND(TARGET_TO_GEN) TARGET_TO_GEN<<2
-
-
 
 
 

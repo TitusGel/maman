@@ -1,12 +1,10 @@
 #define DIE(MESSAGE)\
 addError(#MESSAGE, line, NULL);\
 freeWord(first);\
-freeWord(second);\
-freeWord(third);\
 return;
 #include "header.h"
 
-static Opcode opCodes[NUM_OF_OPCODES] = {
+Opcode opCodes[NUM_OF_OPCODES] = {
         {"mov", 0, 1705},
         {"cmp", 1, 1769},
         {"add", 2, 1705},
@@ -24,7 +22,9 @@ static Opcode opCodes[NUM_OF_OPCODES] = {
         {"rts", 14, 4},
         {"stop", 15, 4}};
 
-static Pattern legalPatterns[] = {
+
+
+Pattern legalPatterns[] = {
         {"source addressing method 0", 1<<10},
         {"source addressing method 1", 1<<9},
         {"source addressing method 2", 1<<8},
@@ -42,14 +42,10 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
 {
     WordLine *first  = (WordLine *)(calloc(1,sizeof(WordLine)));
     checkAllocation(first);
-    WordLine *second = (WordLine *)(calloc(1,sizeof(WordLine)));
-    checkAllocation(second);
-    WordLine *third  = (WordLine *)(calloc(1,sizeof(WordLine)));
-    checkAllocation(third);
+
     /*Index for loops*/
     int i;
     /*How much do we want to increment IC?*/
-    int increment_value_IC;
     int commandFound = -1;
     unsigned int patternToCheck = 0;
     int secondAddressingMethod  =-1;
@@ -78,8 +74,6 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
     if(!*command){
         return;
     }
-
-
 
     if(*secondWord){
 
@@ -219,14 +213,14 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
     } else if(thirdAddressingMethod == -1){
         patternToCheck |= legalPatterns[9].p;
         patternToCheck |= legalPatterns[secondAddressingMethod].p;
-        first->Word    |= (secondAddressingMethod PUSH_TARGET_OPERAN);
+        first->word    |= (secondAddressingMethod PUSH_TARGET_OPERAN);
         /* If we have recieved two operands */
     } else {
         patternToCheck |= legalPatterns[10].p;
         patternToCheck |= legalPatterns[secondAddressingMethod].p;
         patternToCheck |= legalPatterns[thirdAddressingMethod+4].p;
-        first->Word    |= (thirdAddressingMethod PUSH_TARGET_OPERAN);
-        first->Word    |= (thirdAddressingMethod PUSH_TARGET_OPERAN);
+        first->word    |= (thirdAddressingMethod PUSH_TARGET_OPERAN);
+        first->word    |= (thirdAddressingMethod PUSH_TARGET_OPERAN);
     }
 
     /* Now check if the pattern is valid to the command
@@ -237,40 +231,52 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
      */
     i = NUM_OF_OPCODES;
     while(i--){
-        if(!strcmp(command, opCodes[i-1])){commandFound = i-1;}
+        if(!strcmp(command, opCodes[i-1].str)){commandFound = i-1;}
     }
     if(!(commandFound+1)){
         DIE("Command not found")
     }
-    if((patternToCheck & opCodes[commandFound]->p) == patternToCheck){
+    if((patternToCheck & opCodes[commandFound].p) == patternToCheck){
         first->line  = line;
-        second->line = line;
-        third->line  = line;
-        first->word |= opCodes[commandFound]->code PUSH_OPCODE;
-
+        first->word |= opCodes[commandFound].code PUSH_OPCODE;
+        addWordLine(first);
         if(secondAddressingMethod != -1 ){
             /* If we have only one operand */
             if(thirdAddressingMethod == -1 ){
                 if(secondAddressingMethod == 2){
                     if(firstParameterAddressingMethod == 3 && secondParameteAddressingMethod == 3){
-                        /* TODO : create word menualy*/
-
+                        WordLine *wordToAdd = (WordLine *)(calloc(1,sizeof(WordLine)));
+                        checkAllocation(wordToAdd);
+                        (*IC)++;
+                        wordToAdd->line = line;
+                        int num1 = atoi(firstParameter+1);
+                        int num2 = atoi(secondParamete+1);
+                        wordToAdd->word |= num1 PUSH_SRC_REG;
+                        wordToAdd->word |= num2 PUSH_TARG_REG;
+                        addWordLine(wordToAdd);
                     } else {
-                        addAdditional(firstParameter,firstParameterAddressingMethod,0,IC);
-                        addAdditional(secondParamete,secondParameteAddressingMethod,1,IC);
+                        addAdditional(firstParameter,firstParameterAddressingMethod,0,IC,line);
+                        addAdditional(secondParamete,secondParameteAddressingMethod,1,IC,line);
                     }
                 }else{
-                    addAdditional(secondWord,secondAddressingMethod,0,IC);
+                    addAdditional(secondWord,secondAddressingMethod,0,IC,line);
                 }
                 /* If we have two operands */
             } else {
                 if(secondAddressingMethod == 3 && thirdAddressingMethod == 3){
-                    /* TODO : create word menualy*/
-
+                    WordLine *wordToAdd = (WordLine *)(calloc(1,sizeof(WordLine)));
+                    checkAllocation(wordToAdd);
+                    (*IC)++;
+                    wordToAdd->line = line;
+                    int num1 = atoi(secondWord + 1);
+                    int num2 = atoi(thirdWord + 1);
+                    wordToAdd->word |= num1 PUSH_SRC_REG;
+                    wordToAdd->word |= num2 PUSH_TARG_REG;
+                    addWordLine(wordToAdd);
                     /* Send two operands to creation*/
                 } else {
-                    addAdditional(secondWord,secondAddressingMethod,0,IC);
-                    addAdditional(thirdWord,secondAddressingMethod,1,IC);
+                    addAdditional(secondWord,secondAddressingMethod,0,IC,line);
+                    addAdditional(thirdWord,secondAddressingMethod,1,IC,line);
                 }
             }
 

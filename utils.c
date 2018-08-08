@@ -7,6 +7,24 @@
  ---------------------------------------
  */
 
+static Opcode opCodes[NUM_OF_OPCODES] = {
+        {"mov", 0, 1705},
+        {"cmp", 1, 1769},
+        {"add", 2, 1705},
+        {"sub", 3, 1705},
+        {"not", 4, 42},
+        {"clr", 5, 42},
+        {"lea", 6, 553},
+        {"inc", 7, 42},
+        {"dec", 8, 42},
+        {"jmp", 9, 58},
+        {"bne", 10, 58},
+        {"red", 11, 42},
+        {"prn", 12, 106},
+        {"jsr", 13, 58},
+        {"rts", 14, 4},
+        {"stop", 15, 4}};
+
 
 /* This function checks if pointer is null */
 void checkAllocation(void * ptr)
@@ -245,5 +263,33 @@ int secondMethodFormValidation(char * candidate){
     } else {
         return 0;
     }
+}
 
+void addAdditional(char *param,int method,int isSource,int *IC,line){
+    WordLine *wordToAdd = (WordLine *)(calloc(1,sizeof(WordLine)));
+    checkAllocation(wordToAdd);
+    (*IC)++;
+    wordToAdd->line = line;
+
+    if(method == IMMEDIATE){
+        int num = atoi(param+1);
+        wordToAdd->word |= num PUSH_IMMEDIATE;
+    } else if(method == DIRECT) {
+        wordToAdd->missingLabel = (char *)(malloc(sizeof(char)));
+        strcpy(wordToAdd->missingLabel,param);
+        wordToAdd->word = 1;
+    } else {
+        int num = atoi(param+1);
+        if(isSource){
+            wordToAdd->word |= num PUSH_SRC_REG;
+        } else{
+            wordToAdd->word |= num PUSH_TARG_REG;
+        }
+    }
+
+    addWordLine(wordToAdd);
+}
+
+int labelReservedNameValidation(char * str){
+    return (isOperation(str) || isRegister(str));
 }

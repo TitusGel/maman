@@ -28,18 +28,11 @@ void addNumber(char * number, int line, int * DC)
   return;
   }
 
-  /* if number is out of 12-bit range */
-  if ((tmpNum < MIN_NUMBER_DATA) || (tmpNum > MAX_NUMBER_DATA))
-  {
-    /* add error and exit function */
-    addError("Number is out of range", line, number);
-    return;
-  }
   /* create new pointer to data, allocate memory */
   tmp = malloc(sizeof(Data));
   checkAllocation(tmp);
   /* Cast tmpNum(long) to a short int type, and assign to tmp */
-  tmp->Word = (short int)tmpNum;
+  tmp->word = (short int)tmpNum;
   tmp->next = NULL;
   /* if the list is empty */
   if (!head)
@@ -142,12 +135,12 @@ int countData()
   if (!ptr)
     return counter;
 
-    /* go through the list and count each node */
-    while (ptr)
-    {
-      counter++;
-      ptr = ptr->next;
-    }
+  /* go through the list and count each node */
+  while (ptr)
+  {
+    counter++;
+    ptr = ptr->next;
+  }
   /* Return the number of nodes */
   return counter;
 }
@@ -181,12 +174,12 @@ void freeData()
   if (!ptr)
     return;
     /* free each data node */
-    while (ptr)
-    {
-      Data * tmp = ptr;
-      ptr = ptr->next;
-      free(tmp);
-    }
+  while (ptr)
+  {
+    Data * tmp = ptr;
+    ptr = ptr->next;
+    free(tmp);
+  }
     /* make the head pointer null */
     head = NULL;
 }

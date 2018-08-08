@@ -36,7 +36,6 @@ void secondPass()
             if (tmpSymbol->external)
             {
                 tmpWordLine->word |= 1;
-                tmpWordLine->holder.immediate.number = 0;
                 tmpWordLine->isExternal = TRUE;
                 tmpWordLine->externalLabel = tmpSymbol->label;
             }
@@ -44,7 +43,7 @@ void secondPass()
             else
             {
                 tmpWordLine->word |= 2;
-                tmpWordLine->holder.immediate.number = tmpSymbol->address;
+                tmpWordLine->address = tmpSymbol->address;
             }
         }
         tmpWordLine->missingLabel = NULL;

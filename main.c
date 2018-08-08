@@ -3,7 +3,6 @@
 int main(int argc,char* argv[]) {
 
     /*Index used to loop through the input files*/
-    int index;
     FILE *fp = NULL;
     int IC = 100;
     int DC = 0;
@@ -11,16 +10,16 @@ int main(int argc,char* argv[]) {
     if(argc < 2){
         FILE_NOT_FOUND;
         exit(1);
-    } else if(argc>2){
-        main(argc-1,argv);
+    } else if(argc > 2){
+        main(argc - 1 , argv);
     }
 
-    fp = fopen(strcat(argv[argc-1],FILE_EXTENTION),"r");
+    fp = fopen(strcat(argv[argc-1],AS_EXTENSION),"r");
     if(!fp){
         FILE_ERROR;
     } else{
         /*first pass*/
-               firstPass(f, &IC, &DC);
+               firstPass(fp, &IC, &DC);
         /*update symbols*/
                 updateSymbols(IC);
         /*Update words list addresses*/
@@ -28,16 +27,16 @@ int main(int argc,char* argv[]) {
         /*update data list addresses*/
                           updateDataAddresses(IC);
         /*Second pass*/
-                secondPass(IC);
+                secondPass();
         /*If there were no errors, export the files*/
         if (!isError())
         {
-            exportFiles(IC, DC, argv[index]);
+            exportFiles(IC, DC, argv[argc-1]);
         }
         /*If there were errors, export the error file*/
         else
         {
-            printErrors(argv[index]);
+            printErrors(argv[argc-1]);
             /*Free the errors list*/
                              freeErrors();
         }

@@ -70,7 +70,7 @@ typedef struct entry
     /*Label of entry */
     char * label;
     /*Address */
-    short int address;
+    int address;
     /* Does it have an address? (for internal use) */
     int hasAddress;
     /* Line of entry */
@@ -98,4 +98,5 @@ typedef struct opcode
     /* The group */
     unsigned int p;
 } Opcode;
+
 #endif

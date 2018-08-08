@@ -1,5 +1,5 @@
-#ifndef DEFINES_H
-#define DEFINES_H
+#ifndef HEADER_H
+#define HEADER_H
 
 /*
 How it works:
@@ -72,8 +72,7 @@ char * getLabel(char * token);
 int getDirective(char * token);
 int checkComment(char * candidate);
 void convertToStrange2(unsigned int word, char* str );
-
-
+int labelReservedNameValidation(char * str);
 /* function implemented in entryList.c functions */
 void addEntry(char * label, int line);
 void freeEntries();
@@ -87,7 +86,7 @@ int isRegister(char * token);
 int isIndex(char * token);
 int isOperation(char * token);
 int secondMethodFormValidation(char * candidate);
-
+void addAdditional(char *param,int method,int isSource,int *IC,line);
 /* function implemented in wordsList.c functions */
 void addWordLine(WordLine * node);
 void freeWords();
