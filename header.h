@@ -29,7 +29,7 @@ How it works:
 #include "structs.h"
 #include "defines.h"
 
-/* function implemented in files.c */
+/* function implemented in  */
 FILE * openFile(char* filename, char * mode, char * extension);
 void exportFiles(int IC, int DC, char * name);
 
@@ -41,6 +41,9 @@ int labelReservedWordValidation(char * label);
 
 /* function implemented in secondStage.c functions */
 void secondPass();
+
+/* function implenented in thirdStage.c*/
+void thirdStage(int IC, int DC, char * name);
 
 /* function implemented in errorHandler.c functions */
 void addError(char * err, int line, char * str);
@@ -95,5 +98,6 @@ WordLine * getMissingLabel();
 WordLine * getHeadWord();
 int countWords();
 void updateAddresses();
+
 
 #endif

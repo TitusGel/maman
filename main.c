@@ -17,28 +17,28 @@ int main(int argc,char* argv[]) {
     fp = fopen(strcat(argv[argc-1],AS_EXTENSION),"r");
     if(!fp){
         FILE_ERROR;
-    } else{
+    } else {
         /*first pass*/
-               firstPass(fp, &IC, &DC);
+        firstPass(fp, &IC, &DC);
         /*update symbols*/
-                updateSymbols(IC);
+        updateSymbols(IC);
         /*Update words list addresses*/
-                           updateAddresses();
+        updateAddresses();
         /*update data list addresses*/
-                          updateDataAddresses(IC);
+        updateDataAddresses(IC);
         /*Second pass*/
-                secondPass();
+        secondPass();
         /*If there were no errors, export the files*/
         if (!isError())
         {
-            exportFiles(IC, DC, argv[argc-1]);
+            thirdStage(IC, DC, argv[argc-1]);
         }
         /*If there were errors, export the error file*/
         else
         {
             printErrors(argv[argc-1]);
             /*Free the errors list*/
-                             freeErrors();
+            freeErrors();
         }
         /*Cleanup*/
          freeData();
