@@ -14,7 +14,7 @@ int main(int argc,char* argv[]) {
         main(argc - 1 , argv);
     }
 
-    fp = fopen(strcat(argv[argc-1],AS_EXTENSION),"r");
+    fp = openFile(argv[argc-1],"r",AS_EXTENSION);
     if(!fp){
         FILE_ERROR;
     } else {

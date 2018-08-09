@@ -97,7 +97,7 @@ void printErrors(char * filename)
     int maxLine = getMaxLine();
     int index = 1;
     /* create filename for this input file */
-    char error_filename[MAX_FILENAME];
+    char error_filename[FILE_NAME_LEN];
     strcpy(error_filename, "errors-");
     strcat(error_filename, filename);
     /* pointer to go through all the errors */

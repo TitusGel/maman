@@ -230,7 +230,7 @@ int secondMethodFormValidation(char * candidate){
     int commaPlacing = 0;
 
     while((ptr[i]) && (ptr[i] != '\n')){
-        if((*ptr != '(')){
+        if((ptr[i] == '(')){
             if(commaPlacing || closePlacing || openPlacing){
                 return 0;
 
@@ -239,7 +239,7 @@ int secondMethodFormValidation(char * candidate){
 
             }
         }
-        if((*ptr != ',')){
+        if((ptr[i] == ',')){
             if(commaPlacing || closePlacing){
                 return 0;
 
@@ -248,7 +248,7 @@ int secondMethodFormValidation(char * candidate){
 
             }
         }
-        if((*ptr != ')')){
+        if((ptr[i] == ')')){
             if(closePlacing){
                 return 0;
 
@@ -256,7 +256,7 @@ int secondMethodFormValidation(char * candidate){
                 closePlacing = i;
             }
         }
-
+i++;
     }
     if(openPlacing && closePlacing && commaPlacing){
         return openPlacing;
@@ -292,4 +292,24 @@ void addAdditional(char *param,int method,int isSource,int *IC,line){
 
 int labelReservedNameValidation(char * str){
     return (isOperation(str) || isRegister(str));
+}
+
+FILE * openFile(char* filename, char * mode, char * extension)
+{
+    /*Temp file to be returned*/
+    FILE * tmp = NULL;
+    /*Full filename string*/
+    char full_filename[FILE_NAME_LEN];
+    /*Copy the filename from argv to the full filename string*/
+    strcpy(full_filename, filename);
+    /*Add the .as extension to the full filename.*/
+    strcat(full_filename, extension);
+    /*Open the file. if fopen return null, exit the function and print error to screen*/
+    if (!(tmp = fopen(full_filename, mode)))
+    {
+        printf("Can't open file %s.\n", full_filename);
+        return NULL;
+    }
+    /*Return pointer to the file*/
+    return tmp;
 }

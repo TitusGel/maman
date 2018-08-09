@@ -55,14 +55,20 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
     char secondWord[MAX_LINE]   = "\0";
     char thirdWord[MAX_LINE]    = "\0";
 
+    /* Is in use in order to check for the second method*/
+    char allParameters[MAX_LINE]    = "\0";
+
     // parameters
     char *firstParameter;
     char *secondParamete;
     char *temp;
     int firstOpen;
     char command[MAX_LINE]  = "\0";
-    char *parameterHolder   = 0;
+
     strcpy(command,currWord);
+
+    strcpy(allParameters,currWord+((int)strlen(currWord)+1));
+
     currWord = strtok(NULL, " ,\t\n");
     strcpy(secondWord,currWord);
     currWord = strtok(NULL, " ,\t\n");
@@ -98,15 +104,14 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
 
             /* After nagative result for the first two It is methods 1/2 */
         } else {
-            firstOpen = secondMethodFormValidation(secondWord);
+            firstOpen = secondMethodFormValidation(allParameters);
             if(firstOpen){
                 secondAddressingMethod = 2;
                 firstParameter = &secondWord[firstOpen+1];
                 temp = firstParameter;
-                while(*temp != ','){temp++;}
-                *temp = '\0';
-                temp ++;
-                secondParamete = temp;
+
+                secondParamete = thirdWord;
+                temp = secondParamete;
                 while(*temp != ')'){temp++;}
                 *temp = '\0';
 
@@ -194,7 +199,7 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
                 // must be a label
             } else {
                 if(labelNamingValidation(secondWord)){
-                    secondAddressingMethod = 1;
+                    thirdAddressingMethod = 1;
                 } else {
                     DIE("Invalid label naming")
                 }
@@ -218,8 +223,8 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
     } else {
         patternToCheck |= legalPatterns[10].p;
         patternToCheck |= legalPatterns[secondAddressingMethod].p;
-        patternToCheck |= legalPatterns[thirdAddressingMethod+4].p;
-        first->word    |= (thirdAddressingMethod PUSH_TARGET_OPERAN);
+         patternToCheck |= legalPatterns[thirdAddressingMethod+4].p;
+        first->word    |= (secondAddressingMethod PUSH_SOURCE_OPERAN);
         first->word    |= (thirdAddressingMethod PUSH_TARGET_OPERAN);
     }
 
@@ -275,8 +280,8 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
                     addWordLine(wordToAdd);
                     /* Send two operands to creation*/
                 } else {
-                    addAdditional(secondWord,secondAddressingMethod,0,IC,line);
-                    addAdditional(thirdWord,secondAddressingMethod,1,IC,line);
+                    addAdditional(secondWord,secondAddressingMethod,1,IC,line);
+                    addAdditional(thirdWord,thirdAddressingMethod,0,IC,line);
                 }
             }
 

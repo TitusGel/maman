@@ -42,7 +42,7 @@ void firstPass(FILE * f, int * IC, int * DC)
                 /* set label to null */
                               label = NULL;
             }
-            else if (!labelReservedNameValidation(label))
+            else if (labelReservedNameValidation(label))
             {
                 addError("Label name is reserved", lineCounter, NULL);
             }
