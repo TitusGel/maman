@@ -225,6 +225,7 @@ void convertToStrange2(unsigned int word, char* target )
 int secondMethodFormValidation(char * candidate){
     char * ptr = candidate;
     int i = 0;
+    int numOfBlancs = 0;
     int openPlacing = 0;
     int closePlacing = 0;
     int commaPlacing = 0;
@@ -235,7 +236,7 @@ int secondMethodFormValidation(char * candidate){
                 return 0;
 
             } else {
-                openPlacing = i;
+                openPlacing = i - numOfBlancs;
 
             }
         }
@@ -256,7 +257,15 @@ int secondMethodFormValidation(char * candidate){
                 closePlacing = i;
             }
         }
-i++;
+        if(ptr[i] == '\t' || ptr[i] == ' '){
+            if(openPlacing){
+                return 0;
+            } else {
+                numOfBlancs ++;
+            }
+        }
+            i++;
+
     }
     if(openPlacing && closePlacing && commaPlacing){
         return openPlacing;
@@ -273,6 +282,7 @@ void addAdditional(char *param,int method,int isSource,int *IC,line){
 
     if(method == IMMEDIATE){
         int num = atoi(param+1);
+        num = num<0? (-1 * num) : num ;
         wordToAdd->word |= num PUSH_IMMEDIATE;
     } else if(method == DIRECT) {
         wordToAdd->missingLabel = (char *)(malloc(sizeof(char)));

@@ -52,7 +52,7 @@ void secondPass()
     while ((tmpEntry = getEntry()))
     {
         /* Search for symbols with the same label */
-                                          tmpSymbol = searchSymbol(tmpEntry->label);
+        tmpSymbol = searchSymbol(tmpEntry->label);
         /* If there is no such symbol, add an error */
         if(!tmpSymbol)
         {

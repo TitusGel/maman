@@ -169,7 +169,7 @@ void firstPass(FILE * f, int * IC, int * DC)
         }
     }
     /*If the file is empty*/
-    if (lineCounter)
+    if (!lineCounter)
     {
         addError("ERROR: File is empty.", -1, NULL);
     }

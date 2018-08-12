@@ -70,9 +70,13 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
     strcpy(allParameters,currWord+((int)strlen(currWord)+1));
 
     currWord = strtok(NULL, " ,\t\n");
-    strcpy(secondWord,currWord);
+    if(currWord) {
+        strcpy(secondWord, currWord);
+    }
     currWord = strtok(NULL, " ,\t\n");
-    strcpy(thirdWord,currWord);
+    if(currWord) {
+        strcpy(thirdWord, currWord);
+    }
 
     if(strtok(NULL, " ,\t\n")){
         DIE("Too many operands..")
@@ -177,7 +181,7 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
                 }
             }
         }
-        if(*thirdWord){
+        if((secondAddressingMethod != 2) && *thirdWord){
             if (*thirdWord == '#')
             {
                 int num2;
@@ -217,7 +221,7 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
         /* If we have recieved only one operand */
     } else if(thirdAddressingMethod == -1){
         patternToCheck |= legalPatterns[9].p;
-        patternToCheck |= legalPatterns[secondAddressingMethod].p;
+        patternToCheck |= legalPatterns[secondAddressingMethod+4].p;
         first->word    |= (secondAddressingMethod PUSH_TARGET_OPERAN);
         /* If we have recieved two operands */
     } else {
@@ -235,8 +239,9 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
      supported patterns is equals to the pattern to check
      */
     i = NUM_OF_OPCODES;
-    while(i--){
+    while(i){
         if(!strcmp(command, opCodes[i-1].str)){commandFound = i-1;}
+        i--;
     }
     if(!(commandFound+1)){
         DIE("Command not found")

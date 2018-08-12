@@ -20,7 +20,9 @@ enum boolean {FALSE, TRUE};
 #define OPCODES_AMOUNT     16
 #define MAX_CODE_LINES     256
 #define MAX_COMMAND_LENGTH 10
-#define NUM_OF_OPCODES 15
+#define NUM_OF_OPCODES 16
+
+#define NEGATIVE_HENDLER ^=16383
 
 #define PUSH_SOURCE_OPERAN <<4
 #define PUSH_TARGET_OPERAN <<2
