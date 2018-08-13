@@ -213,12 +213,12 @@ int getDirective(char * token)
 
 void convertToStrange2(unsigned int word, char* target )
 {
-    int i = 14;
-    for (; 0 <= i; i-- )
+    int i;
+    for (i=0; i<BITS_IN_WORD; i++ )
     {
-        *(target + i) = ((1<<i) & word)? '/':'.';
+        target[i] = ((1<<(BITS_IN_WORD-1-i)) & word)? '/':'.';
     }
-
+target[i] = '\0';
 }
 
 

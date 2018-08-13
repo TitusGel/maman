@@ -10,7 +10,7 @@ void thirdStage(int IC, int DC, char * name)
     /*Word holder*/
     /*Extern flag*/
     int nExtern = FALSE;
-    char toPrint[BITS_IN_WORD];
+    char toPrint[BITS_IN_WORD+1];
     /*Entry flag*/
     int nEntry = 0;
     /*Pointer to WordLine*/

@@ -20,10 +20,7 @@ int main(int argc,char* argv[]) {
     } else {
         /*first pass*/
         firstPass(fp, &IC, &DC);
-        printSymbol();
-        printEntry();
-        printData();
-        printWords();
+
         /*update symbols*/
         updateSymbols(IC);
 
@@ -34,7 +31,10 @@ int main(int argc,char* argv[]) {
         /*Second pass*/
 
         secondPass();
-
+        printSymbol();
+        printEntry();
+        printData();
+        printWords();
         /*If there were no errors, export the files*/
         if (!isError())
         {
