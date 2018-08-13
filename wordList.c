@@ -12,7 +12,7 @@ void addWordLine(WordLine * node)
         /* point head to node */
         head = node;
     }
-    /* If head is not null */
+        /* If head is not null */
     else
     {
         /* Go through the list until the last node */
@@ -21,6 +21,15 @@ void addWordLine(WordLine * node)
             p = p->next;
         /* Assign the last node's next pointer to the new node */
         p->next = node;
+    }
+}
+void printWords()
+{
+    WordLine *p = head;
+    puts("word-list \n \n ");
+    while (p) {
+        printf("word = %0d missing = %s address = %d line = %d external = %s isEx= %d \n",p->word,p->missingLabel,p->address,p->line,p->externalLabel,p->isExternal);
+        p = p->next;
     }
 }
 

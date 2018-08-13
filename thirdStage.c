@@ -19,6 +19,8 @@ void thirdStage(int IC, int DC, char * name)
     Entry * pe = NULL;
     /*Pointer to data*/
     Data * pd = NULL;
+
+    Label * pl = NULL;
     /*open an object file in write mode*/
     object = openFile(name, "w", OB_EXTENSION);
     /*assign wordNode pointer with wordNode head*/
@@ -29,7 +31,7 @@ void thirdStage(int IC, int DC, char * name)
     while (p)
     {
         convertToStrange2(p->word,toPrint);
-        fprintf(object, "%d\t%s\n", p->address, toPrint);
+        fprintf(object, "0%d\t%s\n", p->address, toPrint);
 
         /*If we found an external word, set flag to 0*/
         if (p->isExternal == TRUE)
@@ -44,7 +46,7 @@ void thirdStage(int IC, int DC, char * name)
     while (pd)
     {
         convertToStrange2(pd->word,toPrint);
-        fprintf(object, "%d\t%s\n", pd->address, toPrint);
+        fprintf(object, "0%d\t%s\n", pd->address, toPrint);
 
         pd = pd->next;
     }
@@ -68,7 +70,7 @@ void thirdStage(int IC, int DC, char * name)
     if (nExtern)
     {
         /*open an extern file in write mode*/
-        externs = openFile(name, "w", EXT_EXTENSION);
+      //  externs = openFile(name, "w", EXT_EXTENSION);
         /*assign pointer with word list head*/
         p = getHeadWord();
         /*Go through the list*/
@@ -78,9 +80,26 @@ void thirdStage(int IC, int DC, char * name)
             if (p->isExternal == TRUE)
             {
                 convertToStrange2(p->word,toPrint);
-                fprintf(object, "%d\t%s\n", p->externalLabel, p->address);
+                //fprintf(object, "%d\t%s\n", p->address,p->externalLabel);
             }
             p = p->next;
+        }
+    }
+    if (nExtern)
+    {
+        /*open an extern file in write mode*/
+        externs = openFile(name, "w", EXT_EXTENSION);
+        /*assign pointer with word list head*/
+        pl = getSymbolHead();
+        /*Go through the list*/
+        while (pl)
+        {
+            /*if the word is external*/
+            if (pl->external == TRUE)
+            {
+                fprintf(externs, "%d\t%s\n", pl->address,pl->label);
+            }
+            pl = pl->next;
         }
     }
     printf("Success! files exported.\n");

@@ -98,6 +98,12 @@ WordLine * getMissingLabel();
 WordLine * getHeadWord();
 int countWords();
 void updateAddresses();
+Label * getSymbolHead();
 
+/* Debug */
+void printSymbol();
+void printEntry();
+void printData();
+void printWords();
 
 #endif

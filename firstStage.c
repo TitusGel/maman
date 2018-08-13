@@ -94,7 +94,7 @@ void firstPass(FILE * f, int * IC, int * DC)
                 if (label)
                 {
                     /* add to symbols list*/
-                                    addSymbol(label, *DC, FALSE, FALSE, lineCounter);
+                      addSymbol(label, *DC, FALSE, FALSE, lineCounter);
                 }
                 /*add to data*/
                         addString(currWord, lineCounter, DC);
@@ -115,7 +115,7 @@ void firstPass(FILE * f, int * IC, int * DC)
                     continue;
                 }
                 /* add an entry node*/
-                              addEntry(currWord, lineCounter);
+                 addEntry(currWord, lineCounter);
                 /*if there's another word*/
                 (currWord = strtok(NULL, " \t\n"));
                 if (currWord)
@@ -166,6 +166,9 @@ void firstPass(FILE * f, int * IC, int * DC)
         {
             /*Analyze the operation*/
                          analyzeOperation(currWord, lineCounter, IC, label);
+        if(label){
+            addSymbol(label,0,FALSE,TRUE,lineCounter);
+        }
         }
     }
     /*If the file is empty*/

@@ -62,6 +62,18 @@ int checkEntry(char * label)
     return 1;
 }
 
+void printEntry()
+{
+    Entry * ptr = head;
+    /* Go through the list */
+    puts("entry-list");
+    while (ptr)
+    {
+       printf("label = %s line = %d, add= %d has= %d \n",ptr->label,ptr->line,ptr->address,ptr->hasAddress);
+        ptr = ptr->next;
+    }
+}
+
 /* This function frees all the nodes in this list */
 void freeEntries()
 {

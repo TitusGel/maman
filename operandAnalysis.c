@@ -112,7 +112,7 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
             if(firstOpen){
                 secondAddressingMethod = 2;
                 firstParameter = &secondWord[firstOpen+1];
-                temp = firstParameter;
+
 
                 secondParamete = thirdWord;
                 temp = secondParamete;
@@ -139,7 +139,7 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
 
                     // must be a label
                 } else {
-                    if(labelNamingValidation(secondWord)){
+                    if(labelNamingValidation(firstParameter)){
                         firstParameterAddressingMethod = 1;
                     } else {
                         DIE("Invalid label naming")
@@ -172,7 +172,7 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
                     }
                 }
 
-                /* The second word's method must be 1 */
+                /* The second param's method must be 1 */
             } else {
                 if(labelNamingValidation(secondWord)){
                     secondAddressingMethod = 1;

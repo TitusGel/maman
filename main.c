@@ -20,14 +20,21 @@ int main(int argc,char* argv[]) {
     } else {
         /*first pass*/
         firstPass(fp, &IC, &DC);
+        printSymbol();
+        printEntry();
+        printData();
+        printWords();
         /*update symbols*/
         updateSymbols(IC);
+
         /*Update words list addresses*/
         updateAddresses();
         /*update data list addresses*/
         updateDataAddresses(IC);
         /*Second pass*/
+
         secondPass();
+
         /*If there were no errors, export the files*/
         if (!isError())
         {
