@@ -247,6 +247,7 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
         DIE("Command not found")
     }
     if((patternToCheck & opCodes[commandFound].p) == patternToCheck){
+        (*IC)++;
         first->line  = line;
         first->word |= opCodes[commandFound].code PUSH_OPCODE;
         addWordLine(first);
