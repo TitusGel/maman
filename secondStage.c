@@ -42,8 +42,8 @@ void secondPass()
             /* If it's not external, change the word accordingly and assign the address */
             else
             {
+                tmpWordLine->word |= tmpSymbol->address PUSH_IMMEDIATE;
                 tmpWordLine->word |= 2;
-                tmpWordLine->address = tmpSymbol->address;
             }
         }
         tmpWordLine->missingLabel = NULL;

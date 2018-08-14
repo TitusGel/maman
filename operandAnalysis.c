@@ -251,6 +251,10 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
         (*IC)++;
         first->line  = line;
         first->word |= opCodes[commandFound].code PUSH_OPCODE;
+        if(secondAddressingMethod == 2){
+            first->word |= firstParameterAddressingMethod PUSH_FIRST_PARAMER;
+            first->word |= secondParameteAddressingMethod PUSH_SECOND_PARAME;
+        }
         addWordLine(first);
         if(secondAddressingMethod != -1 ){
             /* If we have only one operand */
@@ -270,8 +274,8 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
                         wordToAdd->word |= num2 PUSH_TARG_REG;
                         addWordLine(wordToAdd);
                     } else {
-                        addAdditional(firstParameter,firstParameterAddressingMethod,0,IC,line);
-                        addAdditional(secondParamete,secondParameteAddressingMethod,1,IC,line);
+                        addAdditional(firstParameter,firstParameterAddressingMethod,1,IC,line);
+                        addAdditional(secondParamete,secondParameteAddressingMethod,0,IC,line);
                     }
                 }else{
                     addAdditional(secondWord,secondAddressingMethod,0,IC,line);

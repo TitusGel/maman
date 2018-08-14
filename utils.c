@@ -287,7 +287,7 @@ void addAdditional(char *param,int method,int isSource,int *IC,line){
     } else if(method == DIRECT) {
         wordToAdd->missingLabel = (char *)(malloc(sizeof(char)));
         strcpy(wordToAdd->missingLabel,param);
-        wordToAdd->word = 1;
+        wordToAdd->word = 0;
     } else {
         int num = atoi(param+1);
         if(isSource){
