@@ -282,7 +282,7 @@ void addAdditional(char *param,int method,int isSource,int *IC,line){
 
     if(method == IMMEDIATE){
         int num = atoi(param+1);
-        num = num<0? (-1 * num) : num ;
+        //num = num<0? (-1 * num) : num ;
         wordToAdd->word |= num PUSH_IMMEDIATE;
     } else if(method == DIRECT) {
         wordToAdd->missingLabel = (char *)(malloc(sizeof(char)));
