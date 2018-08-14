@@ -111,6 +111,7 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
             firstOpen = secondMethodFormValidation(allParameters);
             if(firstOpen){
                 secondAddressingMethod = 2;
+                secondWord[firstOpen]='\0';
                 firstParameter = &secondWord[firstOpen+1];
 
 
@@ -255,6 +256,9 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
             /* If we have only one operand */
             if(thirdAddressingMethod == -1 ){
                 if(secondAddressingMethod == 2){
+
+                    addAdditional(secondWord,3,0,IC,line);
+
                     if(firstParameterAddressingMethod == 3 && secondParameteAddressingMethod == 3){
                         WordLine *wordToAdd = (WordLine *)(calloc(1,sizeof(WordLine)));
                         checkAllocation(wordToAdd);
