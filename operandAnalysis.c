@@ -261,7 +261,7 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
             if(thirdAddressingMethod == -1 ){
                 if(secondAddressingMethod == 2){
 
-                    addAdditional(secondWord,3,0,IC,line);
+                    addAdditional(secondWord,1,0,IC,line);
 
                     if(firstParameterAddressingMethod == 3 && secondParameteAddressingMethod == 3){
                         WordLine *wordToAdd = (WordLine *)(calloc(1,sizeof(WordLine)));

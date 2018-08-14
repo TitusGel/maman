@@ -35,14 +35,14 @@ void secondPass()
             /* If it's external, change the word accordingly */
             if (tmpSymbol->external)
             {
-                tmpWordLine->word |= 1;
+                tmpWordLine->word = 1;
                 tmpWordLine->isExternal = TRUE;
                 tmpWordLine->externalLabel = tmpSymbol->label;
             }
             /* If it's not external, change the word accordingly and assign the address */
             else
             {
-                tmpWordLine->word |= tmpSymbol->address PUSH_IMMEDIATE;
+                tmpWordLine->word = tmpSymbol->address PUSH_IMMEDIATE;
                 tmpWordLine->word |= 2;
             }
         }
