@@ -225,11 +225,11 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
         first->word    |= (secondAddressingMethod PUSH_TARGET_OPERAN);
         /* If we have recieved two operands */
     } else {
-        patternToCheck |= legalPatterns[10].p;
-        patternToCheck |= legalPatterns[secondAddressingMethod].p;
+        patternToCheck  |= legalPatterns[10].p;
+        patternToCheck  |= legalPatterns[secondAddressingMethod].p;
          patternToCheck |= legalPatterns[thirdAddressingMethod+4].p;
-        first->word    |= (secondAddressingMethod PUSH_SOURCE_OPERAN);
-        first->word    |= (thirdAddressingMethod PUSH_TARGET_OPERAN);
+        first->word     |= (secondAddressingMethod PUSH_SOURCE_OPERAN);
+        first->word     |= (thirdAddressingMethod PUSH_TARGET_OPERAN);
     }
 
     /* Now check if the pattern is valid to the command

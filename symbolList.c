@@ -19,7 +19,7 @@ void addSymbol(char * label, int address, int external, int operation, int line)
     /*Check if allocation succeeded*/
                          checkAllocation(tmp->label);
     /*Copy the label from the input to this symbol*/
-        strcpy(tmp->label, label);
+    strcpy(tmp->label, label);
     /*Copy value of DC*/
         tmp->address = address;
     /*Copy external flag*/

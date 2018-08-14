@@ -97,7 +97,7 @@ void firstPass(FILE * f, int * IC, int * DC)
                       addSymbol(label, *DC, FALSE, FALSE, lineCounter);
                 }
                 /*add to data*/
-                        addString(currWord, lineCounter, DC);
+                addString(currWord, lineCounter, DC);
                 /* go to next line */
                 continue;
 
@@ -164,11 +164,12 @@ void firstPass(FILE * f, int * IC, int * DC)
         /*if the token is not a directive*/
         else
         {
+            if(label){
+                addSymbol(label,*IC,FALSE,TRUE,lineCounter);
+            }
             /*Analyze the operation*/
                          analyzeOperation(currWord, lineCounter, IC, label);
-        if(label){
-            addSymbol(label,0,FALSE,TRUE,lineCounter);
-        }
+
         }
     }
     /*If the file is empty*/

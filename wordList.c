@@ -36,8 +36,8 @@ void printWords()
 /*This function will update all of the words with their corresponding addresses*/
 void updateAddresses()
 {
-    int address = 100;
-    WordLine * ptr = head;
+    int address = STARTING_ADDRESS;
+    WordLine * ptr = getHeadWord();
     if (!ptr)
         return;
 

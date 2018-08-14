@@ -21,6 +21,7 @@ enum boolean {FALSE, TRUE};
 #define MAX_CODE_LINES     256
 #define MAX_COMMAND_LENGTH 10
 #define NUM_OF_OPCODES 16
+#define STARTING_ADDRESS 100
 
 #define NEGATIVE_HENDLER ^=16383
 

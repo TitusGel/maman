@@ -46,7 +46,7 @@ void thirdStage(int IC, int DC, char * name)
     while (pd)
     {
         convertToStrange2(pd->word,toPrint);
-        fprintf(object, "0%d\t%s\n", pd->address, toPrint);
+        fprintf(object, "0%d\t\t%s\n", pd->address, toPrint);
 
         pd = pd->next;
     }
