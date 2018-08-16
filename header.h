@@ -76,6 +76,7 @@ int getDirective(char * token);
 int checkComment(char * candidate);
 void convertToStrange2(unsigned int word, char* str );
 int labelReservedNameValidation(char * str);
+
 /* function implemented in entryList.c functions */
 void addEntry(char * label, int line);
 void freeEntries();

@@ -22,6 +22,7 @@ void addError(char * err, int line, char * str)
                   tmp->str_error = err;
     /* assign error line */
                   tmp->line = line;
+
     /* if we received another string */
     if (str)
     {

@@ -20,6 +20,7 @@ typedef struct wordLine
 
 } WordLine;
 
+
 /* definition of error type. used in the errors list */
 typedef struct error
 {

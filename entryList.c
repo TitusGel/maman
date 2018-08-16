@@ -16,8 +16,9 @@ void addEntry(char * label, int line)
         addError("Multiple entries with same label", line, label);
         return;
     }
+
     /*allocate memory for new node*/
-        tmp = malloc(sizeof(Entry));
+    tmp = malloc(sizeof(Entry));
     checkAllocation(tmp);
     /* copy the label */
                 tmp->label = malloc(sizeof(char)*MAX_LINE);

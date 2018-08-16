@@ -41,6 +41,7 @@ int main(int argc,char* argv[]) {
         printData();
         printWords();
         secondPass();
+
         /*If there were no errors, export the files*/
         if (!isError())
         {

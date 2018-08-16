@@ -34,6 +34,7 @@ void addNumber(char * number, int line, int * DC)
   /* Cast tmpNum(long) to a short int type, and assign to tmp */
   tmp->word = (short int)tmpNum;
   tmp->next = NULL;
+
   /* if the list is empty */
   if (!head)
   {

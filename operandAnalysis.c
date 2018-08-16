@@ -239,6 +239,7 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
      So - we will check if the & of the pattern to check and the
      supported patterns is equals to the pattern to check
      */
+
     i = NUM_OF_OPCODES;
     while(i){
         if(!strcmp(command, opCodes[i-1].str)){commandFound = i-1;}

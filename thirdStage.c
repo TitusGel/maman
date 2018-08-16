@@ -27,6 +27,7 @@ void thirdStage(int IC, int DC, char * name)
     p = getHeadWord();
     /*Print the number of words and number of data */
     fprintf(object, "%d %d\n", countWords(), countData());
+
     /*go through the entire words list*/
     while (p)
     {

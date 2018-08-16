@@ -62,6 +62,7 @@ void updateSymbols(int IC)
     }
 }
 
+
 void printSymbol()
 {
     Label * ptr = head;

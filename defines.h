@@ -7,9 +7,7 @@
 /* boolean enum */
 enum boolean {FALSE, TRUE};
 
-
-/* Magic number */
-
+/* Magic numbers */
 #define DECIMAL_BASE       10
 #define BITS_IN_WORD       14
 #define LABEL_LENGTH       32

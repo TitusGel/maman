@@ -267,6 +267,7 @@ int secondMethodFormValidation(char * candidate){
             i++;
 
     }
+
     if(openPlacing && closePlacing && commaPlacing){
         return openPlacing;
     } else {

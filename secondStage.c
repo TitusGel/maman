@@ -17,6 +17,7 @@ void secondPass()
     /* Get every label which is missing an address*/
     while ((tmpWordLine = getMissingLabel()))
     {
+
         /* Search for a symbol in the symbols list with the same address */
         tmpSymbol = searchSymbol(tmpWordLine->missingLabel);
         /* If no such symbol was found, add an error */

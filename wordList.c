@@ -49,6 +49,7 @@ void updateAddresses()
     }
 }
 
+
 /* This function returns the number of nodes in the list */
 int countWords()
 {
