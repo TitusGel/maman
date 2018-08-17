@@ -8,7 +8,7 @@ int main(int argc,char* argv[]) {
     int DC = 0;
 
     if(argc < 2){
-        FILE_NOT_FOUND;
+        printf("File not found, please check it and try again");
         exit(1);
     } else if(argc > 2){
         main(argc - 1 , argv);
@@ -16,7 +16,7 @@ int main(int argc,char* argv[]) {
 
     fp = openFile(argv[argc-1],"r",AS_EXTENSION);
     if(!fp){
-        FILE_ERROR;
+        printf("File opening error, please check it and try again");
     } else {
         /*first pass*/
         firstPass(fp, &IC, &DC);
@@ -25,10 +25,7 @@ int main(int argc,char* argv[]) {
         /*update symbols*/
         updateSymbols(IC);
 
-        printSymbol();
-        printEntry();
-        printData();
-        printWords();
+
         secondPass();
         /*Update words list addresses*/
         updateAddresses();
@@ -36,16 +33,13 @@ int main(int argc,char* argv[]) {
         updateDataAddresses(IC);
         /*Second pass*/
 
-        printSymbol();
-        printEntry();
-        printData();
-        printWords();
+
         secondPass();
 
         /*If there were no errors, export the files*/
         if (!isError())
         {
-            thirdStage(IC, DC, argv[argc-1]);
+            thirdStage(argv[argc-1]);
         }
         /*If there were errors, export the error file*/
         else

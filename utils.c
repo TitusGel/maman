@@ -113,10 +113,7 @@ char *  labelNamingValidation(char * label){
     }
     return label;
 }
-int labelReservedWordValidation(char * label){
 
-    return (isOperation(label)||isRegister(label))? FALSE: TRUE;
-}
 
 /*This function recieves a string and returns:
  1 if the string is an operation
@@ -129,10 +126,10 @@ int isOperation(char * currWord)
     {
         if (!strcmp(currWord, opCodes[i].str))
         {
-            return 1;
+            return TRUE;
         }
     }
-    return 0;
+    return FALSE;
 }
 
 /*This function recieves a string and returns:
@@ -141,6 +138,7 @@ int isOperation(char * currWord)
 int isRegister(char * currWord)
 {
     int i;
+    char * registers[NUM_OF_REGISTERS] = {"r1", "r2", "r3", "r4", "r5", "r6", "r7"};
     if (strlen(currWord) == 2)
     {
         if (currWord[0] == 'r')
@@ -151,14 +149,14 @@ int isRegister(char * currWord)
                 {
                     if (!strcmp(currWord, registers[i]))
                     {
-                        return 1;
+                        return TRUE;
                     }
                 }
 
             }
         }
     }
-    return 0;
+    return FALSE;
 }
 
 
@@ -233,7 +231,7 @@ int secondMethodFormValidation(char * candidate){
     while((ptr[i]) && (ptr[i] != '\n')){
         if((ptr[i] == '(')){
             if(commaPlacing || closePlacing || openPlacing){
-                return 0;
+                return FALSE;
 
             } else {
                 openPlacing = i - numOfBlancs;
@@ -242,7 +240,7 @@ int secondMethodFormValidation(char * candidate){
         }
         if((ptr[i] == ',')){
             if(commaPlacing || closePlacing){
-                return 0;
+                return FALSE;
 
             } else {
                 commaPlacing = i;
@@ -251,7 +249,7 @@ int secondMethodFormValidation(char * candidate){
         }
         if((ptr[i] == ')')){
             if(closePlacing){
-                return 0;
+                return FALSE;
 
             } else {
                 closePlacing = i;
@@ -259,7 +257,7 @@ int secondMethodFormValidation(char * candidate){
         }
         if(ptr[i] == '\t' || ptr[i] == ' '){
             if(openPlacing){
-                return 0;
+                return FALSE;
             } else {
                 numOfBlancs ++;
             }
@@ -271,11 +269,11 @@ int secondMethodFormValidation(char * candidate){
     if(openPlacing && closePlacing && commaPlacing){
         return openPlacing;
     } else {
-        return 0;
+        return FALSE;
     }
 }
 
-void addAdditional(char *param,int method,int isSource,int *IC,line){
+void addAdditional(char *param,int method,int isSource,int *IC,int line){
     WordLine *wordToAdd = (WordLine *)(calloc(1,sizeof(WordLine)));
     checkAllocation(wordToAdd);
     (*IC)++;
@@ -283,7 +281,6 @@ void addAdditional(char *param,int method,int isSource,int *IC,line){
 
     if(method == IMMEDIATE){
         int num = atoi(param+1);
-        //num = num<0? (-1 * num) : num ;
         wordToAdd->word |= num PUSH_IMMEDIATE;
     } else if(method == DIRECT) {
         wordToAdd->missingLabel = (char *)(malloc(sizeof(char)));

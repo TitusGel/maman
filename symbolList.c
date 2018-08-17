@@ -63,18 +63,6 @@ void updateSymbols(int IC)
 }
 
 
-void printSymbol()
-{
-    Label * ptr = head;
-    puts("symbol-list");
-    while (ptr)
-    {
-        printf("label = %s add= %d ex = %d op = %d \n",ptr->label,ptr->address,ptr->external,ptr->operation);
-        ptr = ptr->next;
-    }
-}
-
-
 /*This function cleans up the symbol list*/
 void freeSymbols()
 {
@@ -123,7 +111,3 @@ Label * searchSymbol(char * label)
     return NULL;
 }
 
-Label * getSymbolHead()
-{
-    return head;
-}

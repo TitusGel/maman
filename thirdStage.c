@@ -1,7 +1,7 @@
 #include "header.h"
 
 /*This function exports the output files*/
-void thirdStage(int IC, int DC, char * name)
+void thirdStage(char * name)
 {
     /*FILE pointers*/
     FILE * object = NULL;
@@ -12,7 +12,7 @@ void thirdStage(int IC, int DC, char * name)
     int nExtern = FALSE;
     char toPrint[BITS_IN_WORD+1];
     /*Entry flag*/
-    int nEntry = 0;
+    int nEntry = FALSE;
     /*Pointer to WordLine*/
     WordLine * p = NULL;
     /*Pointer to entry*/
@@ -20,7 +20,6 @@ void thirdStage(int IC, int DC, char * name)
     /*Pointer to data*/
     Data * pd = NULL;
 
-    Label * pl = NULL;
     /*open an object file in write mode*/
     object = openFile(name, "w", OB_EXTENSION);
     /*assign wordNode pointer with wordNode head*/

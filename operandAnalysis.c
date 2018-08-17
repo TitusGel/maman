@@ -1,8 +1,10 @@
+#include "header.h"
+
 #define DIE(MESSAGE)\
-addError(#MESSAGE, line, NULL);\
+addError(MESSAGE, line, NULL);\
 freeWord(first);\
 return;
-#include "header.h"
+
 
 Opcode opCodes[NUM_OF_OPCODES] = {
         {"mov", 0, 1705},
@@ -25,45 +27,49 @@ Opcode opCodes[NUM_OF_OPCODES] = {
 
 
 Pattern legalPatterns[] = {
-        {"source addressing method 0", 1<<10},
-        {"source addressing method 1", 1<<9},
-        {"source addressing method 2", 1<<8},
-        {"source addressing method 3", 1<<7},
-        {"target addressing method 0", 1<<6},
-        {"target addressing method 1", 1<<5},
-        {"target addressing method 2", 1<<4},
-        {"target addressing method 3", 1<<3},
-        {"0 operand", 1<<2},
-        {"1 operand", 1<<1},
-        {"2 operand", 1}
+        {"command does not support source addressing method 0", 1<<10},
+        {"command does not support source addressing method 1", 1<<9},
+        {"command does not support source addressing method 2", 1<<8},
+        {"command does not support source addressing method 3", 1<<7},
+        {"command does not support target addressing method 0", 1<<6},
+        {"command does not support target addressing method 1", 1<<5},
+        {"command does not support target addressing method 2", 1<<4},
+        {"command does not support target addressing method 3", 1<<3},
+        {"command does not support 0 operand", 1<<2},
+        {"command does not support 1 operand", 1<<1},
+        {"command does not support 2 operand", 1}
 };
 
-void analyzeOperation(char * currWord, int line, int *IC, char * label)
+void analyzeOperation(char * currWord, int line, int *IC)
 {
-    WordLine *first  = (WordLine *)(calloc(1,sizeof(WordLine)));
-    checkAllocation(first);
+
 
     /*Index for loops*/
     int i;
     /*How much do we want to increment IC?*/
-    int commandFound = -1;
+    int commandFound = NONE;
     unsigned int patternToCheck = 0;
-    int secondAddressingMethod  =-1;
-    int thirdAddressingMethod   =-1;
-    int secondParameteAddressingMethod = -1;
-    int firstParameterAddressingMethod = -1;
+    int secondAddressingMethod  =NONE;
+    int thirdAddressingMethod   =NONE;
+    int secondParameteAddressingMethod = NONE;
+    int firstParameterAddressingMethod = NONE;
     char secondWord[MAX_LINE]   = "\0";
     char thirdWord[MAX_LINE]    = "\0";
 
     /* Is in use in order to check for the second method*/
     char allParameters[MAX_LINE]    = "\0";
 
-    // parameters
-    char *firstParameter;
-    char *secondParamete;
+    /* parameters */
+    char *firstParameter = NULL;
+    char *secondParamete = NULL;
     char *temp;
     int firstOpen;
     char command[MAX_LINE]  = "\0";
+
+    WordLine *first  = (WordLine *)(calloc(1,sizeof(WordLine)));
+    checkAllocation(first);
+
+
 
     strcpy(command,currWord);
 
@@ -90,27 +96,27 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
         /* Check if the word is an imidiete operand */
         if (*secondWord == '#')
         {
-            int num;
+
             char * ptr;
             char * errorptr;
             ptr = secondWord + 1;
-            num = strtol(ptr, &errorptr, DECIMAL_BASE);
+            strtol(ptr, &errorptr, DECIMAL_BASE);
 
             /*if number conversion failes*/
             if (*errorptr)
             {
                 DIE("Invalid Number")
             }
-            secondAddressingMethod = 0;
+            secondAddressingMethod = IMMEDIATE;
             /* Check if the word is an register operand */
         } else if (isRegister(secondWord)){
-            secondAddressingMethod = 3;
+            secondAddressingMethod = REGISTER;
 
             /* After nagative result for the first two It is methods 1/2 */
         } else {
             firstOpen = secondMethodFormValidation(allParameters);
             if(firstOpen){
-                secondAddressingMethod = 2;
+                secondAddressingMethod = JUMP;
                 secondWord[firstOpen]='\0';
                 firstParameter = &secondWord[firstOpen+1];
 
@@ -122,52 +128,67 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
 
                 if (*firstParameter == '#')
                 {
-                    int num2;
+
                     char * ptr2;
                     char * errorptr2;
                     ptr2 = firstParameter + 1;
-                    num2 = strtol(ptr2, &errorptr2, DECIMAL_BASE);
+                    strtol(ptr2, &errorptr2, DECIMAL_BASE);
 
                     /*if number conversion failes*/
                     if (*errorptr2)
                     {
                         DIE("Invalid Number")
                     }
-                    firstParameterAddressingMethod = 0;
-                    // Check if the operand is a register
+                    firstParameterAddressingMethod = IMMEDIATE;
+                    /*  Check if the operand is a register */
                 } else if (isRegister(firstParameter)){
-                    firstParameterAddressingMethod = 3;
+                    firstParameterAddressingMethod = REGISTER;
 
-                    // must be a label
+                    /* must be a label */
                 } else {
                     if(labelNamingValidation(firstParameter)){
-                        firstParameterAddressingMethod = 1;
+                        if(!labelReservedNameValidation(firstParameter)){
+                            firstParameterAddressingMethod = DIRECT;
+                        }else{
+                            DIE("Label is not declared")
+                        }
+
                     } else {
                         DIE("Invalid label naming")
                     }
                 }
                 if (*secondParamete == '#')
                 {
-                    int num2;
                     char * ptr2;
                     char * errorptr2;
                     ptr2 = secondParamete + 1;
-                    num2 = strtol(ptr2, &errorptr2, DECIMAL_BASE);
+                    (int)strtol(ptr2, &errorptr2, DECIMAL_BASE);
 
                     /*if number conversion failes*/
                     if (*errorptr2)
                     {
                         DIE("Invalid Number")
                     }
-                    secondParameteAddressingMethod = 0;
-                    // Check if the operand is a register
+                    secondParameteAddressingMethod = IMMEDIATE;
+                    /* Check if the operand is a register */
                 } else if (isRegister(secondParamete)){
-                    secondParameteAddressingMethod = 3;
+                    secondParameteAddressingMethod = REGISTER;
 
-                    // must be a label
+                    /* must be a label */
                 } else {
                     if(labelNamingValidation(secondParamete)){
-                        secondParameteAddressingMethod = 1;
+
+
+
+
+                        if(!labelReservedNameValidation(secondParamete)){
+                            secondParameteAddressingMethod = JUMP;
+                        }else{
+                            DIE("Label is not declared")
+                        }
+
+
+
                     } else {
                         DIE("Invalid label naming")
                     }
@@ -176,35 +197,58 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
                 /* The second param's method must be 1 */
             } else {
                 if(labelNamingValidation(secondWord)){
-                    secondAddressingMethod = 1;
+
+
+
+
+                    if(!labelReservedNameValidation(secondWord)){
+                        secondAddressingMethod = DIRECT;
+                    }else{
+                        DIE("Label is not declared")
+                    }
+
+
+
                 } else {
                     DIE("Invalid label naming")
                 }
             }
         }
-        if((secondAddressingMethod != 2) && *thirdWord){
+        if((secondAddressingMethod != JUMP) && *thirdWord){
+
             if (*thirdWord == '#')
             {
-                int num2;
                 char * ptr2;
                 char * errorptr2;
                 ptr2 = thirdWord + 1;
-                num2 = strtol(ptr2, &errorptr2, DECIMAL_BASE);
+                strtol(ptr2, &errorptr2, DECIMAL_BASE);
 
                 /*if number conversion failes*/
                 if (*errorptr2)
                 {
                     DIE("Invalid Number")
                 }
-                thirdAddressingMethod = 0;
-                // Check if the operand is a register
+                thirdAddressingMethod = IMMEDIATE;
+                /* Check if the operand is a register */
             } else if (isRegister(thirdWord)){
-                thirdAddressingMethod = 3;
+                thirdAddressingMethod = REGISTER;
 
-                // must be a label
+                /* must be a label */
             } else {
-                if(labelNamingValidation(secondWord)){
-                    thirdAddressingMethod = 1;
+                if(labelNamingValidation(thirdWord)){
+
+
+
+                    if(!labelReservedNameValidation(thirdWord)){
+                        thirdAddressingMethod = DIRECT;
+                    }else{
+                        DIE("Label is not declared")
+                    }
+
+
+
+
+
                 } else {
                     DIE("Invalid label naming")
                 }
@@ -214,13 +258,13 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
 
 
     /* If we have recieved no operands at all */
-    if(secondAddressingMethod == -1) {
+    if(secondAddressingMethod == NONE) {
 
         /*  Update the oparand count*/
         patternToCheck |= legalPatterns[8].p;
 
         /* If we have recieved only one operand */
-    } else if(thirdAddressingMethod == -1){
+    } else if(thirdAddressingMethod == NONE){
         patternToCheck |= legalPatterns[9].p;
         patternToCheck |= legalPatterns[secondAddressingMethod+4].p;
         first->word    |= (secondAddressingMethod PUSH_TARGET_OPERAN);
@@ -257,20 +301,22 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
             first->word |= secondParameteAddressingMethod PUSH_SECOND_PARAME;
         }
         addWordLine(first);
-        if(secondAddressingMethod != -1 ){
+        if(secondAddressingMethod != NONE ){
             /* If we have only one operand */
-            if(thirdAddressingMethod == -1 ){
+            if(thirdAddressingMethod == NONE ){
                 if(secondAddressingMethod == 2){
 
                     addAdditional(secondWord,1,0,IC,line);
 
-                    if(firstParameterAddressingMethod == 3 && secondParameteAddressingMethod == 3){
+                    if(firstParameterAddressingMethod == REGISTER && secondParameteAddressingMethod == 3){
+                        int num1;
+                        int num2;
                         WordLine *wordToAdd = (WordLine *)(calloc(1,sizeof(WordLine)));
                         checkAllocation(wordToAdd);
                         (*IC)++;
                         wordToAdd->line = line;
-                        int num1 = atoi(firstParameter+1);
-                        int num2 = atoi(secondParamete+1);
+                        num1 = atoi(firstParameter+1);
+                        num2 = atoi(secondParamete+1);
                         wordToAdd->word |= num1 PUSH_SRC_REG;
                         wordToAdd->word |= num2 PUSH_TARG_REG;
                         addWordLine(wordToAdd);
@@ -283,13 +329,15 @@ void analyzeOperation(char * currWord, int line, int *IC, char * label)
                 }
                 /* If we have two operands */
             } else {
-                if(secondAddressingMethod == 3 && thirdAddressingMethod == 3){
+                if(secondAddressingMethod == REGISTER && thirdAddressingMethod == REGISTER){
                     WordLine *wordToAdd = (WordLine *)(calloc(1,sizeof(WordLine)));
+                    int num1;
+                    int num2;
                     checkAllocation(wordToAdd);
                     (*IC)++;
                     wordToAdd->line = line;
-                    int num1 = atoi(secondWord + 1);
-                    int num2 = atoi(thirdWord + 1);
+                    num1 = atoi(secondWord + 1);
+                    num2 = atoi(thirdWord + 1);
                     wordToAdd->word |= num1 PUSH_SRC_REG;
                     wordToAdd->word |= num2 PUSH_TARG_REG;
                     addWordLine(wordToAdd);

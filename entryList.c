@@ -45,7 +45,7 @@ void addEntry(char * label, int line)
 }
 
 /*This function checks if an entry with the same label already exists
-If there is one, it will return 0. else, it will return 1;*/
+If there is one, it will return 0. else, it will return 1;* TODO decide if we wanna change to be logical */
 int checkEntry(char * label)
 {
     Entry * ptr = head;
@@ -55,25 +55,15 @@ int checkEntry(char * label)
         /* If we find a node with the same label */
         if (!strcmp(ptr->label, label))
         {
-            return 0;
+            return FALSE;
         }
         ptr = ptr->next;
     }
     /* If such node doesn't exist, return 1 */
-    return 1;
+    return TRUE;
 }
 
-void printEntry()
-{
-    Entry * ptr = head;
-    /* Go through the list */
-    puts("entry-list");
-    while (ptr)
-    {
-       printf("label = %s line = %d, add= %d has= %d \n",ptr->label,ptr->line,ptr->address,ptr->hasAddress);
-        ptr = ptr->next;
-    }
-}
+
 
 /* This function frees all the nodes in this list */
 void freeEntries()

@@ -168,7 +168,7 @@ void firstPass(FILE * f, int * IC, int * DC)
                 addSymbol(label,*IC,FALSE,TRUE,lineCounter);
             }
             /*Analyze the operation*/
-                         analyzeOperation(currWord, lineCounter, IC, label);
+                         analyzeOperation(currWord, lineCounter, IC);
 
         }
     }

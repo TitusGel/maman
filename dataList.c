@@ -83,18 +83,7 @@ void addChar(char c)
   }
 }
 
-void printData()
-{
 
-    Data * p = head;
-  puts("data-list");
-    while (p) {
-
-      printf("word = %0d address = %0d \n ",p->word,p->address);
-      p = p->next;
-    }
-
-}
 
 /* This function adds a string to the data list */
 void addString(char * string, int line, int *DC)

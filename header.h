@@ -29,21 +29,17 @@ How it works:
 #include "structs.h"
 #include "defines.h"
 
-/* function implemented in  */
-FILE * openFile(char* filename, char * mode, char * extension);
-void exportFiles(int IC, int DC, char * name);
 
 /* function implemented in firstStage.c functions */
 void firstPass(FILE * f, int * counter, int * DC);
 char *  labelNamingValidation(char * label);
 char *  labelFormValidation(char * candidate);
-int labelReservedWordValidation(char * label);
 
 /* function implemented in secondStage.c functions */
 void secondPass();
 
 /* function implenented in thirdStage.c*/
-void thirdStage(int IC, int DC, char * name);
+void thirdStage(char * name);
 
 /* function implemented in errorHandler.c functions */
 void addError(char * err, int line, char * str);
@@ -71,11 +67,12 @@ void updateDataAddresses(int IC);
 
 /* function implemented in utils.c functions */
 void checkAllocation(void * ptr);
-char * getLabel(char * token);
 int getDirective(char * token);
 int checkComment(char * candidate);
 void convertToStrange2(unsigned int word, char* str );
 int labelReservedNameValidation(char * str);
+FILE * openFile(char* filename, char * mode, char * extension);
+
 
 /* function implemented in entryList.c functions */
 void addEntry(char * label, int line);
@@ -85,26 +82,20 @@ Entry * getEntry();
 Entry * getHeadEntry();
 
 /* function implemented in operandAnalysis.c functions */
-void analyzeOperation(char * token, int line, int *IC, char *label);
+void analyzeOperation(char * token, int line, int *IC);
 int isRegister(char * token);
-int isIndex(char * token);
 int isOperation(char * token);
 int secondMethodFormValidation(char * candidate);
-void addAdditional(char *param,int method,int isSource,int *IC,line);
+void addAdditional(char *param,int method,int isSource,int *IC,int line);
 /* function implemented in wordsList.c functions */
 void addWordLine(WordLine * node);
 void freeWords();
-void freeWord();
+void freeWord(WordLine * ptr);
 WordLine * getMissingLabel();
 WordLine * getHeadWord();
 int countWords();
 void updateAddresses();
-Label * getSymbolHead();
 
-/* Debug */
-void printSymbol();
-void printEntry();
-void printData();
-void printWords();
+
 
 #endif

@@ -79,7 +79,7 @@ int getMaxLine()
     int maxLine = 1;
     p = head;
     if (!p)
-        return 0;
+        return FALSE;
     while (p)
     {
         if (p->line > maxLine)
@@ -104,7 +104,7 @@ void printErrors(char * filename)
     /* pointer to go through all the errors */
 
     /* open the file and check if succeeded */
-    if ((tmp = openFile(error_filename, "w", ".txt")))
+    if ((tmp = openFile(error_filename, "w", TXT_EXTENSION)))
     {
         if (!ptr)
         {
